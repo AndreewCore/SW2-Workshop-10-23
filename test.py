@@ -1,13 +1,15 @@
 class student:
     def __init__(s, id, name):
-        s.id = id
-        s.name = name
-        s.gradez = []
-        s.isPassed = "NO"
-        s.honor = "?"
+        if id is not None & name is not None:
+            s.id = id
+            s.name = name
+            s.gradez = []
+            s.isPassed = "NO"
+            s.honor = "?"
 
     def addGrades(self, g):
-        self.gradez.append(g)
+        if isinstance(g, int) & g > 0 & g < 100:
+            self.gradez.append(g)
 
     def calculate_average(self):
         if not self.gradez:

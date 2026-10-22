@@ -1,0 +1,2 @@
+[1mtest.py[m[36m:[m16[36m:[m9[36m:[m [1m[31mF841[m local variable 'avg' is assigned to but never used
+1     F841 local variable 'avg' is assigned to but never used

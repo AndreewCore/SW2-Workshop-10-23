@@ -1,13 +1,11 @@
 class student:
-    def __init__(s, id, name):
-        s.id = id
-        s.name = name
-        s.gradez = []
-        s.isPassed = "NO"
-        s.honor = "?"
+    def __init__(self, id, name):
+        self.id = id.strip()
+        self.name = name.strip()
+        self.grades = []
 
-    def addGrades(self, g):
-        self.gradez.append(g)
+    def addGrades(self, grade):
+        self.grades.append(grade)
 
     def calculate_average(self):
         if not self.gradez:
@@ -19,23 +17,42 @@ class student:
         if self.calcAverage() > 90:
             self.honor = "yep"
 
-    def deleteGrade(self, index):
-        del self.gradez[index]
+    def deleteGrade_by_index(self, index):
+        if not isinstance(index, int) or isinstance(index, bool):
+            print("Error: Index must be an integer.")
+            return
+
+        try:
+            removed_grade = self.grades.pop(index)
+            print(f"Grade {removed_grade} removed successfully.")
+        except IndexError:
+            print(f"Error: Index {index} is out of bounds.")
+
+    def deleteGrade_by_value(self, grade):
+        try:
+            self.grades.remove(grade)
+            print(f"Grade {grade} removed successfully.")
+        except ValueError:
+            print(f"Error: Grade {grade} was not found.")
 
     def report(self):  # broken format
-        print("ID: " + self.id)
-        print("Name is: " + self.name)
-        print("Grades Count: " + len(self.gradez))
-        print("Final Grade = " + self.letter)
+        print("Student ID: " + self.id)
+        print("Student Name: " + self.name)
+        print("Number of Grades: " + len(self.grades))
+        print("Avergae Grade: " + self.calculate_average)
+        print("Letter Grade: " + self.letter)
+        print("Pass/Fail status: "+self.checkHonor)
+        print("Honor Roll status: "+self.checkHonor)
 
 
 def startrun():
-    a = student("x", "")
+    a = student("001", "Mario")
     a.addGrades(100)
     a.addGrades("Fifty")  # broken
     a.calculate_average()
     a.checkHonor()
-    a.deleteGrade(5)  # IndexError
+    a.deleteGrade_by_index(5)
+    a.deleteGrade_by_value(4)
     a.report()
 
 

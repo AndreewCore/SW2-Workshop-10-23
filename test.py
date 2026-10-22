@@ -1,24 +1,22 @@
 class student:
+
     def __init__(s, id, name):
-        if id is not None & name is not None:
-            s.id = id
-            s.name = name
-            s.gradez = []
-            s.isPassed = "NO"
-            s.honor = "?"
-        elif id is None:
-            print("id cannot be empty")
-        elif name is None:
-            print("Name cannot be empty")
-        else:
-            print("An error ocurred, could not create student")
+        if not str(id or "").strip():
+            raise ValueError("id cannot be empty")
+        if not str(name or "").strip():
+            raise ValueError("Name cannot be empty")
+        s.id = id
+        s.name = name
+        s.gradez = []
+        s.isPassed = "NO"
+        s.honor = False
 
     def addGrades(self, g):
-        if isinstance(g, int) & g > 0 & g < 100:
+        is_number = isinstance(g, (int, float)) and not isinstance(g, bool)
+        if is_number and 0 <= g <= 100:
             self.gradez.append(g)
         else:
             print("grade must be a valid number between 0 and 100")
-
 
     def calculate_average(self):
         if not self.gradez:
@@ -27,13 +25,12 @@ class student:
         return sum(self.gradez) / len(self.gradez)
 
     def checkHonor(self):
-        if self.calcAverage() > 90:
-            self.honor = "yep"
+        self.honor = self.calculate_average() >= 90
 
     def deleteGrade(self, index):
         del self.gradez[index]
 
-    def report(self):  # broken format
+    def report(self):
         print("ID: " + self.id)
         print("Name is: " + self.name)
         print("Grades Count: " + len(self.gradez))
@@ -41,12 +38,16 @@ class student:
 
 
 def startrun():
-    a = student("x", "")
+    try:
+        a = student("x", "")
+    except ValueError as error:
+        print(f"Error: {error}")
+        return
     a.addGrades(100)
-    a.addGrades("Fifty")  # broken
+    a.addGrades("Fifty")
     a.calculate_average()
     a.checkHonor()
-    a.deleteGrade(5)  # IndexError
+    a.deleteGrade(5)
     a.report()
 
 

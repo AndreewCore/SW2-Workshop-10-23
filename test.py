@@ -1,21 +1,31 @@
 class student:
-    def __init__(self, id, name):
-        self.id = id.strip()
-        self.name = name.strip()
-        self.grades = []
 
-    def addGrades(self, grade):
-        self.grades.append(grade)
+    def __init__(s, id, name):
+        if not str(id or "").strip():
+            raise ValueError("id cannot be empty")
+        if not str(name or "").strip():
+            raise ValueError("Name cannot be empty")
+        s.id = id
+        s.name = name
+        s.grades = []
+        s.isPassed = "NO"
+        s.honor = False
+
+    def addGrades(self, g):
+        is_number = isinstance(g, (int, float)) and not isinstance(g, bool)
+        if is_number and 0 <= g <= 100:
+            self.grades.append(g)
+        else:
+            print("grade must be a valid number between 0 and 100")
 
     def calculate_average(self):
-        if not self.gradez:
+        if not self.grades:
             return 0.0
 
-        return sum(self.gradez) / len(self.gradez)
+        return sum(self.grades) / len(self.grades)
 
     def checkHonor(self):
-        if self.calcAverage() > 90:
-            self.honor = "yep"
+        self.honor = self.calculate_average() >= 90
 
     def deleteGrade_by_index(self, index):
         if not isinstance(index, int) or isinstance(index, bool):
@@ -71,9 +81,13 @@ class student:
 
 
 def startrun():
-    a = student("001", "Mario")
+    try:
+        a = student("001", "Mario")
+    except ValueError as error:
+        print(f"Error: {error}")
+        return
     a.addGrades(100)
-    a.addGrades("Fifty")  # broken
+    a.addGrades("Fifty")
     a.calculate_average()
     a.checkHonor()
     a.deleteGrade_by_index(5)

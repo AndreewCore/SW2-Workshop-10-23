@@ -6,10 +6,19 @@ class student:
             s.gradez = []
             s.isPassed = "NO"
             s.honor = "?"
+        elif id is None:
+            print("id cannot be empty")
+        elif name is None:
+            print("Name cannot be empty")
+        else:
+            print("An error ocurred, could not create student")
 
     def addGrades(self, g):
         if isinstance(g, int) & g > 0 & g < 100:
             self.gradez.append(g)
+        else:
+            print("grade must be a valid number between 0 and 100")
+
 
     def calculate_average(self):
         if not self.gradez:

@@ -54,6 +54,31 @@ class student:
         print("Pass/Fail status: "+self.checkHonor)
         print("Honor Roll status: "+self.checkHonor)
 
+    def calculate_avarage_grade(self):
+        if not self.gradez:
+            return 0.0
+        return sum(self.gradez) / len(self.gradez)
+
+    def Letter_grades(self):
+        avg = self.calculate_avarage_grade()
+        if avg >= 90:
+            return "A"
+        elif avg >= 80:
+            return "B"
+        elif avg >= 70:
+            return "C"
+        elif avg >= 60:
+            return "D"
+        else:
+            return "F"
+
+    def passed(self):
+        avg = self.calculate_avarage_grade()
+        if avg >= 60:
+            self.isPassed = "Passed"
+        else:
+            self.isPassed = "Failed"
+
 
 def startrun():
     try:
